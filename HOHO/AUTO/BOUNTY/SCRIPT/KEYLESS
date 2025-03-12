@@ -1,0 +1,51 @@
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+
+_G["Auto Bounty"] = {
+    ["Farm Method"] = "Normal",
+    ["Select Team"] = "Pirate",
+    ["Bypass Teleport"] = true,
+    ["Max Level Distance"] = 612,
+    ["Don't attack friends"] = true,
+    ["Don't attack player with cup"] = false,
+    ["Distance Attack Y"] = 2, -- Shark Race = 0; Others >= 6
+    ["Chat After Kill"] = {
+        ["Active"] = false,
+        ["List Chat"] = {"GG!", "ez", "L"},
+    },
+    ["Yourself"] = {
+        ["Invisible From Ken"] = true,
+        ["No Stun"] = true,
+    },
+    ["SafeZone"] = {Enabled = true, ["Health Left (%)"] = 25, ["Wait Until Heal (%)"] = 80},
+    ["Time Control"] = {
+        ["Max Time Target Player"] = 120,
+    },
+    ["Abilities"] = {
+        ["Auto Click"] = true,
+        ["Melee"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Sword"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Gun"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Fruit"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            V = {Enabled = false, Hold = 0.05, WaitNextSkill = 0.6},
+            F = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+    },
+}
+
+_G.SupperFixLag = true
+_G["Auto Gacha & Store Fruit"] = true
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()
