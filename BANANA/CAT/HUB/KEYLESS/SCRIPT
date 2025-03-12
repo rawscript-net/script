@@ -1,0 +1,51 @@
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/3xjn/UI-Library/main/UI"))()
+local Window = Library:CreateWindow("Free Blox Fruits Hub")
+
+local FarmTab = Window:CreateTab("Auto Farm")
+local TeleportTab = Window:CreateTab("Teleport")
+local CombatTab = Window:CreateTab("Combat")
+local MiscTab = Window:CreateTab("Miscellaneous")
+
+FarmTab:CreateToggle("Auto Farm", false, function(value)
+    getgenv().AutoFarm = value
+    while getgenv().AutoFarm do
+        wait()
+    end
+end)
+
+FarmTab:CreateToggle("Auto Quest", false, function(value)
+    getgenv().AutoQuest = value
+    while getgenv().AutoQuest do
+        wait()
+    end
+end)
+
+TeleportTab:CreateButton("Teleport to Starter Island", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(100, 50, 100)
+end)
+
+CombatTab:CreateToggle("God Mode", false, function(value)
+    if value then
+    end
+end)
+
+CombatTab:CreateToggle("Instant Kill", false, function(value)
+    if value then
+    end
+end)
+
+MiscTab:CreateToggle("ESP Players", false, function(value)
+    if value then
+    end
+end)
+
+MiscTab:CreateToggle("Remove Fog", false, function(value)
+    game.Lighting.FogEnd = 100000
+end)
+
+Window:CreateButton("Close GUI", function()
+    Library:Destroy()
+end)
+
