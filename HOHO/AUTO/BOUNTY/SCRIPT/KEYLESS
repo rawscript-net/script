@@ -1,70 +1,92 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local TweenService = game:GetService("TweenService")
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/UI-Library/main/uilib.lua"))() 
+local Window = Library:CreateWindow("Blox Fruits Hub") 
 
-getgenv().AutoBounty = {
-    Enabled = true,
-    SelectTeam = "Pirate",
-    SafeZone = {Enabled = true, HealthThreshold = 25, HealUntil = 80},
-    AutoAttack = true,
-    AttackDistance = 10, 
-    BypassTeleport = true,
-    NoStun = true,
-    InvisibleFromKen = true,
-    AutoClick = true,
-    Abilities = {
-        Melee = {Z = true, X = true, C = true},
-        Sword = {Z = true, X = true},
-        Gun = {Z = true, X = true},
-        Fruit = {Z = true, X = true, C = true, V = false, F = true},
-    },
-    ChatAfterKill = {
-        Enabled = true,
-        Messages = {"GG!", "ez", "L", "Better luck next time!"}
-    }
+-- Tabs
+local FarmTab = Window:CreateFolder("Auto Farm")
+local BountyTab = Window:CreateFolder("Auto Bounty")
+local RaidTab = Window:CreateFolder("Auto Raid")
+local MiscTab = Window:CreateFolder("Miscellaneous")
+
+getgenv().BloxFruitsConfig = {
+    AutoFarm = false,
+    AutoBounty = false,
+    AutoRaid = false,
+    AutoBoss = false,
+    AutoCollectFruit = false,
+    AutoSeaEvent = false,
+    ESP = false,
+    FastAttack = false,
+    GodMode = false,
+    NoStun = false,
+    WalkSpeed = 100,
+    JumpPower = 200,
+    NoClip = false,
+    AlwaysDay = false
 }
 
-function TeleportToPlayer(targetPlayer)
-    if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+-- Auto Farm Toggle
+FarmTab:Toggle("Enable Auto Farm", function(bool)
+    getgenv().BloxFruitsConfig.AutoFarm = bool
+    if bool then
+        AutoFarm()
+    end
+end)
+
+-- Auto Bounty Toggle
+BountyTab:Toggle("Enable Auto Bounty", function(bool)
+    getgenv().BloxFruitsConfig.AutoBounty = bool
+    if bool then
+        AutoBounty()
+    end
+end)
+
+-- Auto Raid Toggle
+RaidTab:Toggle("Enable Auto Raid", function(bool)
+    getgenv().BloxFruitsConfig.AutoRaid = bool
+    if bool then
+        AutoRaid()
+    end
+end)
+
+-- Speed Settings
+MiscTab:Slider("WalkSpeed", {min = 16, max = 300}, function(value)
+    getgenv().BloxFruitsConfig.WalkSpeed = value
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end)
+
+MiscTab:Slider("JumpPower", {min = 50, max = 300}, function(value)
+    getgenv().BloxFruitsConfig.JumpPower = value
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+end)
+
+-- Auto Farm Function
+function AutoFarm()
+    while getgenv().BloxFruitsConfig.AutoFarm do
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0) 
+        wait(3)
     end
 end
 
-function AttackTarget(target)
-    if not target or not target.Character or not target.Character:FindFirstChild("HumanoidRootPart") then return end
-    while getgenv().AutoBounty.Enabled and target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") do
-        TeleportToPlayer(target)
-        if getgenv().AutoBounty.AutoAttack then
-            local args = {[1] = target.Character}
-            game:GetService("ReplicatedStorage").Remotes:FindFirstChild("Damage"):FireServer(unpack(args))
-        end
-        wait(0.1)
-    end
-end
-
-function GetBestBountyTarget()
-    local highestBounty = 0
-    local bestTarget = nil
-    for _, player in pairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer and player:FindFirstChild("leaderstats") and player.leaderstats:FindFirstChild("Bounty") then
-            local bounty = player.leaderstats.Bounty.Value
-            if bounty > highestBounty then
-                highestBounty = bounty
-                bestTarget = player
+-- Auto Bounty Function
+function AutoBounty()
+    while getgenv().BloxFruitsConfig.AutoBounty do
+        for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+            if player ~= game.Players.LocalPlayer then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
             end
-        end
-    end
-    return bestTarget
-end
-
-spawn(function()
-    while getgenv().AutoBounty.Enabled do
-        local target = GetBestBountyTarget()
-        if target then
-            AttackTarget(target)
         end
         wait(5)
     end
-end)
+end
+
+-- Auto Raid Function
+function AutoRaid()
+    while getgenv().BloxFruitsConfig.AutoRaid do
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(3000, 50, -5000) 
+        wait(5)
+    end
+end
+
+print("🔥 Blox Fruits HoHo Hub-Style Script Loaded! 🔥")
