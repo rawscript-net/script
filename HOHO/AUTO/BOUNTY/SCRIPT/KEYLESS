@@ -1,51 +1,70 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 
-_G["Auto Bounty"] = {
-    ["Farm Method"] = "Normal",
-    ["Select Team"] = "Pirate",
-    ["Bypass Teleport"] = true,
-    ["Max Level Distance"] = 612,
-    ["Don't attack friends"] = true,
-    ["Don't attack player with cup"] = false,
-    ["Distance Attack Y"] = 2, -- Shark Race = 0; Others >= 6
-    ["Chat After Kill"] = {
-        ["Active"] = false,
-        ["List Chat"] = {"GG!", "ez", "L"},
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
+
+getgenv().AutoBounty = {
+    Enabled = true,
+    SelectTeam = "Pirate",
+    SafeZone = {Enabled = true, HealthThreshold = 25, HealUntil = 80},
+    AutoAttack = true,
+    AttackDistance = 10, 
+    BypassTeleport = true,
+    NoStun = true,
+    InvisibleFromKen = true,
+    AutoClick = true,
+    Abilities = {
+        Melee = {Z = true, X = true, C = true},
+        Sword = {Z = true, X = true},
+        Gun = {Z = true, X = true},
+        Fruit = {Z = true, X = true, C = true, V = false, F = true},
     },
-    ["Yourself"] = {
-        ["Invisible From Ken"] = true,
-        ["No Stun"] = true,
-    },
-    ["SafeZone"] = {Enabled = true, ["Health Left (%)"] = 25, ["Wait Until Heal (%)"] = 80},
-    ["Time Control"] = {
-        ["Max Time Target Player"] = 120,
-    },
-    ["Abilities"] = {
-        ["Auto Click"] = true,
-        ["Melee"] = {
-            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
-            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
-            C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
-        },
-        ["Sword"] = {
-            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
-            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
-        },
-        ["Gun"] = {
-            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
-            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
-        },
-        ["Fruit"] = {
-            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
-            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
-            C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
-            V = {Enabled = false, Hold = 0.05, WaitNextSkill = 0.6},
-            F = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
-        },
-    },
+    ChatAfterKill = {
+        Enabled = true,
+        Messages = {"GG!", "ez", "L", "Better luck next time!"}
+    }
 }
 
-_G.SupperFixLag = true
-_G["Auto Gacha & Store Fruit"] = true
+function TeleportToPlayer(targetPlayer)
+    if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+    end
+end
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()
+function AttackTarget(target)
+    if not target or not target.Character or not target.Character:FindFirstChild("HumanoidRootPart") then return end
+    while getgenv().AutoBounty.Enabled and target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") do
+        TeleportToPlayer(target)
+        if getgenv().AutoBounty.AutoAttack then
+            local args = {[1] = target.Character}
+            game:GetService("ReplicatedStorage").Remotes:FindFirstChild("Damage"):FireServer(unpack(args))
+        end
+        wait(0.1)
+    end
+end
+
+function GetBestBountyTarget()
+    local highestBounty = 0
+    local bestTarget = nil
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player:FindFirstChild("leaderstats") and player.leaderstats:FindFirstChild("Bounty") then
+            local bounty = player.leaderstats.Bounty.Value
+            if bounty > highestBounty then
+                highestBounty = bounty
+                bestTarget = player
+            end
+        end
+    end
+    return bestTarget
+end
+
+spawn(function()
+    while getgenv().AutoBounty.Enabled do
+        local target = GetBestBountyTarget()
+        if target then
+            AttackTarget(target)
+        end
+        wait(5)
+    end
+end)
