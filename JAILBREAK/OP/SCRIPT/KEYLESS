@@ -1,0 +1,86 @@
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/3xjn/UI-Library/main/UI"))()
+local Window = Library:CreateWindow("OP Jailbreak Script")
+
+local AutoTab = Window:CreateTab("Auto Rob")
+local TeleportTab = Window:CreateTab("Teleport")
+local CombatTab = Window:CreateTab("Combat")
+local VehicleTab = Window:CreateTab("Vehicle")
+local MiscTab = Window:CreateTab("Miscellaneous")
+
+AutoTab:CreateToggle("Auto Rob Jewelry", false, function(value)
+    getgenv().AutoRobJewelry = value
+    while getgenv().AutoRobJewelry do
+        -- Auto Rob Jewelry Code Here
+        wait()
+    end
+end)
+
+AutoTab:CreateToggle("Auto Rob Bank", false, function(value)
+    getgenv().AutoRobBank = value
+    while getgenv().AutoRobBank do
+        -- Auto Rob Bank Code Here
+        wait()
+    end
+end)
+
+AutoTab:CreateToggle("Auto Rob Museum", false, function(value)
+    getgenv().AutoRobMuseum = value
+    while getgenv().AutoRobMuseum do
+        -- Auto Rob Museum Code Here
+        wait()
+    end
+end)
+
+TeleportTab:CreateButton("Teleport to Criminal Base", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1820, 18, 1440)
+end)
+
+TeleportTab:CreateButton("Teleport to Bank", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(24, 19, 783)
+end)
+
+CombatTab:CreateToggle("God Mode", false, function(value)
+    if value then
+        -- Activate God Mode
+    end
+end)
+
+CombatTab:CreateToggle("No Recoil", false, function(value)
+    if value then
+        -- Remove Recoil Code
+    end
+end)
+
+CombatTab:CreateToggle("Infinite Ammo", false, function(value)
+    if value then
+        -- Infinite Ammo Code
+    end
+end)
+
+VehicleTab:CreateToggle("No Clip Vehicles", false, function(value)
+    if value then
+        -- No Clip Vehicle Code
+    end
+end)
+
+VehicleTab:CreateToggle("Speed Boost", false, function(value)
+    if value then
+        -- Speed Boost Code
+    end
+end)
+
+MiscTab:CreateToggle("ESP Players", false, function(value)
+    if value then
+        -- ESP Code
+    end
+end)
+
+MiscTab:CreateButton("Escape Prison Instantly", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1000, 18, -3000)
+end)
+
+Window:CreateButton("Close GUI", function()
+    Library:Destroy()
+end)
