@@ -1,86 +1,143 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/3xjn/UI-Library/main/UI"))()
-local Window = Library:CreateWindow("OP Jailbreak Script")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
+local Workspace = game:GetService("Workspace")
 
-local AutoTab = Window:CreateTab("Auto Rob")
-local TeleportTab = Window:CreateTab("Teleport")
-local CombatTab = Window:CreateTab("Combat")
-local VehicleTab = Window:CreateTab("Vehicle")
-local MiscTab = Window:CreateTab("Miscellaneous")
+getgenv().JailbreakScript = {
+    AutoRob = true,
+    AutoArrest = true,
+    ESP = true,
+    NoClip = true,
+    SpeedBoost = true,
+    InfiniteAmmo = true,
+    NoRecoil = true,
+    GodMode = true,
+    FlyCar = true,
+    InstantEscape = true,
+}
 
-AutoTab:CreateToggle("Auto Rob Jewelry", false, function(value)
-    getgenv().AutoRobJewelry = value
-    while getgenv().AutoRobJewelry do
-        -- Auto Rob Jewelry Code Here
+-- **Teleport Function**
+function TeleportTo(Position)
+    LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Position)
+end
+
+-- **Auto Rob Function**
+function AutoRob()
+    while getgenv().JailbreakScript.AutoRob do
+        if game.Workspace:FindFirstChild("JewelryStore") then
+            TeleportTo(Vector3.new(69, 19, 1304)) -- Jewelry Store
+            wait(5)
+        end
+        if game.Workspace:FindFirstChild("Bank") then
+            TeleportTo(Vector3.new(24, 19, 783)) -- Bank
+            wait(5)
+        end
+        if game.Workspace:FindFirstChild("Museum") then
+            TeleportTo(Vector3.new(-1246, 34, 1031)) -- Museum
+            wait(5)
+        end
+        if game.Workspace:FindFirstChild("PowerPlant") then
+            TeleportTo(Vector3.new(738, 39, 2335)) -- Power Plant
+            wait(5)
+        end
+        wait(3)
+    end
+end
+
+-- **Auto Arrest Function**
+function AutoArrest()
+    while getgenv().JailbreakScript.AutoArrest do
+        for _, player in pairs(Players:GetPlayers()) do
+            if player.Team.Name == "Criminals" then
+                local args = {[1] = player.Character}
+                game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+            end
+        end
+        wait(2)
+    end
+end
+
+-- **Enable NoClip**
+function NoClip()
+    while getgenv().JailbreakScript.NoClip do
+        for _, part in pairs(LocalPlayer.Character:GetChildren()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = false
+            end
+        end
         wait()
     end
-end)
+end
 
-AutoTab:CreateToggle("Auto Rob Bank", false, function(value)
-    getgenv().AutoRobBank = value
-    while getgenv().AutoRobBank do
-        -- Auto Rob Bank Code Here
+-- **Enable Speed Boost**
+function SpeedBoost()
+    LocalPlayer.Character.Humanoid.WalkSpeed = 100
+end
+
+-- **Enable Infinite Ammo & No Recoil**
+function InfiniteAmmo()
+    while getgenv().JailbreakScript.InfiniteAmmo do
+        for _, gun in pairs(LocalPlayer.Backpack:GetChildren()) do
+            if gun:IsA("Tool") and gun:FindFirstChild("Ammo") then
+                gun.Ammo.Value = math.huge
+            end
+        end
+        wait(1)
+    end
+end
+
+-- **Enable God Mode**
+function GodMode()
+    LocalPlayer.Character.Humanoid.MaxHealth = math.huge
+    LocalPlayer.Character.Humanoid.Health = math.huge
+end
+
+-- **Enable Fly Car**
+function FlyCar()
+    while getgenv().JailbreakScript.FlyCar do
+        for _, vehicle in pairs(Workspace.Vehicles:GetChildren()) do
+            if vehicle:FindFirstChild("Seat") and vehicle.Seat.Occupant == LocalPlayer.Character.Humanoid then
+                vehicle.PrimaryPart.Velocity = Vector3.new(0, 50, 0)
+            end
+        end
         wait()
     end
-end)
+end
 
-AutoTab:CreateToggle("Auto Rob Museum", false, function(value)
-    getgenv().AutoRobMuseum = value
-    while getgenv().AutoRobMuseum do
-        -- Auto Rob Museum Code Here
-        wait()
+-- **Instant Escape from Prison**
+function EscapePrison()
+    TeleportTo(Vector3.new(-1000, 18, -3000)) -- Escape location
+end
+
+-- **ESP Function**
+function ESP()
+    while getgenv().JailbreakScript.ESP do
+        for _, player in pairs(Players:GetPlayers()) do
+            if player.Character and not player.Character:FindFirstChild("ESP") then
+                local ESPBox = Instance.new("Highlight")
+                ESPBox.Parent = player.Character
+                ESPBox.FillTransparency = 0.5
+                ESPBox.OutlineTransparency = 0.2
+                ESPBox.FillColor = player.TeamColor.Color
+                ESPBox.Name = "ESP"
+            end
+        end
+        wait(1)
     end
-end)
+end
 
-TeleportTab:CreateButton("Teleport to Criminal Base", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1820, 18, 1440)
-end)
+-- **Run Features**
+spawn(AutoRob)
+spawn(AutoArrest)
+spawn(NoClip)
+spawn(SpeedBoost)
+spawn(InfiniteAmmo)
+spawn(GodMode)
+spawn(FlyCar)
+spawn(ESP)
 
-TeleportTab:CreateButton("Teleport to Bank", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(24, 19, 783)
-end)
-
-CombatTab:CreateToggle("God Mode", false, function(value)
-    if value then
-        -- Activate God Mode
-    end
-end)
-
-CombatTab:CreateToggle("No Recoil", false, function(value)
-    if value then
-        -- Remove Recoil Code
-    end
-end)
-
-CombatTab:CreateToggle("Infinite Ammo", false, function(value)
-    if value then
-        -- Infinite Ammo Code
-    end
-end)
-
-VehicleTab:CreateToggle("No Clip Vehicles", false, function(value)
-    if value then
-        -- No Clip Vehicle Code
-    end
-end)
-
-VehicleTab:CreateToggle("Speed Boost", false, function(value)
-    if value then
-        -- Speed Boost Code
-    end
-end)
-
-MiscTab:CreateToggle("ESP Players", false, function(value)
-    if value then
-        -- ESP Code
-    end
-end)
-
-MiscTab:CreateButton("Escape Prison Instantly", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1000, 18, -3000)
-end)
-
-Window:CreateButton("Close GUI", function()
-    Library:Destroy()
-end)
+if getgenv().JailbreakScript.InstantEscape then
+    EscapePrison()
+end
