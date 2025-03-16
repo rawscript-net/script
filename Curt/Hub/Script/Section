@@ -1,0 +1,195 @@
+if not game:IsLoaded() then game.Loaded:Wait() end
+
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/jensonhirst/Orion/main/source"))()
+
+local Window = OrionLib:MakeWindow({
+    Name = "CURT HUB | Blox Fruit",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "BloxFruit"
+})
+
+-- Function to load scripts safely
+local function SafeLoad(url, settings)
+    spawn(function()
+        local success, result = pcall(function()
+            return loadstring(game:HttpGet(url))(settings)
+        end)
+        if not success then
+            warn("Failed to load script from: " .. url .. " | Error: " .. result)
+        end
+    end)
+end
+
+-- Scripts Tab
+local ScriptTab = Window:MakeTab({
+    Name = "Scripts",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+ScriptTab:AddToggle({
+    Name = "RedZ",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            SafeLoad("https://raw.githubusercontent.com/realredz/BloxFruits/refs/heads/main/Source.lua", {JoinTeam = "Pirates", Translator = true})
+        end
+    end
+})
+
+ScriptTab:AddToggle({
+    Name = "Teddy",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            SafeLoad("https://raw.githubusercontent.com/skibiditoiletgojo/Haidepzai/refs/heads/main/Teddy-Premium")
+        end
+    end
+})
+
+ScriptTab:AddToggle({
+    Name = "Quantum",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            SafeLoad("https://raw.githubusercontent.com/Trustmenotcondom/QTONYX/refs/heads/main/QuantumOnyx.lua")
+        end
+    end
+})
+
+ScriptTab:AddToggle({
+    Name = "W-Azure",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            getgenv().Team = "Pirates"
+            getgenv().AutoLoad = false 
+            getgenv().SlowLoadUi = false
+            getgenv().ForceUseSilentAimDashModifier = false 
+            getgenv().ForceUseWalkSpeedModifier = false 
+            SafeLoad("https://api.luarmor.net/files/v3/loaders/3b2169cf53bc6104dabe8e19562e5cc2.lua")
+        end
+    end
+})
+
+ScriptTab:AddToggle({
+    Name = "Astral",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            SafeLoad("https://raw.githubusercontent.com/Overgustx2/Main/refs/heads/main/BloxFruits_25.html")
+        end
+    end
+})
+
+-- Auto Farm Tab
+local AutoFarmTab = Window:MakeTab({
+    Name = "Auto Farm",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+-- Auto Farm Logic
+local function StartAutoFarm()
+    while getgenv().AutoFarm do
+        pcall(function()
+            -- Farming Logic (Replace with actual farming functions)
+            print("Farming...")
+        end)
+        wait(1)
+    end
+end
+
+AutoFarmTab:AddToggle({
+    Name = "Bloxfruit Farm",
+    Default = false,
+    Callback = function(Value)
+        getgenv().AutoFarm = Value
+        if Value then
+            spawn(StartAutoFarm)
+        end
+    end
+})
+
+AutoFarmTab:AddToggle({
+    Name = "Farm All Boss",
+    Default = false,
+    Callback = function(Value)
+        getgenv().FarmBoss = Value
+        if Value then
+            spawn(function()
+                while getgenv().FarmBoss do
+                    print("Farming all bosses...")
+                    wait(1)
+                end
+            end)
+        end
+    end
+})
+
+AutoFarmTab:AddToggle({
+    Name = "Mastery Fighting Style",
+    Default = false,
+    Callback = function(Value)
+        getgenv().FarmMasteryFight = Value
+        if Value then
+            spawn(function()
+                while getgenv().FarmMasteryFight do
+                    print("Farming Mastery Fighting Style...")
+                    wait(1)
+                end
+            end)
+        end
+    end
+})
+
+AutoFarmTab:AddToggle({
+    Name = "Mastery Fruit",
+    Default = false,
+    Callback = function(Value)
+        getgenv().FarmMasteryFruit = Value
+        if Value then
+            spawn(function()
+                while getgenv().FarmMasteryFruit do
+                    print("Farming Mastery Fruit...")
+                    wait(1)
+                end
+            end)
+        end
+    end
+})
+
+AutoFarmTab:AddToggle({
+    Name = "Mastery Sword",
+    Default = false,
+    Callback = function(Value)
+        getgenv().FarmMasterySword = Value
+        if Value then
+            spawn(function()
+                while getgenv().FarmMasterySword do
+                    print("Farming Mastery Sword...")
+                    wait(1)
+                end
+            end)
+        end
+    end
+})
+
+AutoFarmTab:AddToggle({
+    Name = "Mastery Gun",
+    Default = false,
+    Callback = function(Value)
+        getgenv().FarmMasteryGun = Value
+        if Value then
+            spawn(function()
+                while getgenv().FarmMasteryGun do
+                    print("Farming Mastery Gun...")
+                    wait(1)
+                end
+            end)
+        end
+    end
+})
+
+OrionLib:Init()
