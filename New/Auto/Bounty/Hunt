@@ -1,0 +1,63 @@
+repeat wait() until game:IsLoaded()
+
+_G["HoHo Hub Auto Bounty V4"] = {
+    ["Avatar"] = "rbxassetid://8598068647",
+    ["Farm Method"] = "Normal", -- Normal or Gun (really Bad rn)
+    ["Select Team"] = "Pirate", -- Pirate/Marine
+    ["Discord Webhook"] = "",
+    ["Bypass Teleport"] = false, -- Not recommended because success rate is low
+    ["Max Level Distance"] = 612, -- Default from wiki, but you can change it
+    ["Don't attack friends"] = true,
+    ["Don't attack player have cup"] = false,
+    ["Distance Attack Y"] = 0, -- Shark Race = 0; Others >= 6
+    
+    ["Chat After Kill"] = {
+        ["Active"] = false, -- Set to false if you don't want auto chat
+        ["List Chat"] = {"i have a good gaming chair", "No skill? Use Hoho hub", "How to play this game", "im new", "your bad"},
+    },
+    
+    ["Yourself"] = {
+        ["Invisible From Ken"] = true,
+        ["No Stun"] = true,
+    },
+    
+    ["SafeZone"] = {
+        Enabled = true, 
+        ["Health Left (%)"] = 25, 
+        ["Wait Until Heal (%)"] = 80
+    },
+    
+    ["Time Control"] = {
+        ["Max Time Target Player"] = 120,
+    },
+    
+    ["Abilities"] = {
+        ["Auto Click"] = true,
+        ["Melee"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Sword"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Gun"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Fruit"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            V = {Enabled = false, Hold = 0.05, WaitNextSkill = 0.6}, -- Disable V for Zoan fruits
+            F = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+    },
+}
+
+_G.SupperFixLag = true -- Helps low-end devices
+_G["Auto Gacha & Store Fruit"] = true -- Auto buy & store fruits
+
+-- Custom keyless version of HOHO script
+loadstring(game:HttpGet("https://raw.githubusercontent.com/yourcustomrepo/keyless_hoho/main/script.lua"))()
