@@ -1,0 +1,117 @@
+repeat wait() until game:IsLoaded()
+
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Orion/main/source"))()
+local Window = OrionLib:MakeWindow({Name = "Custom Blox Fruits Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "BloxFruitsHub"})
+
+_G.Settings = {
+    AutoFarm = false,
+    AutoBounty = false,
+    AutoRaids = false,
+    KillAura = false,
+    AutoServerHop = false,
+    SafeZone = false,
+    SelectTeam = "Pirate",
+    AutoServerHopTargets = {
+        ["RIP_Indra"] = false,
+        ["Dough King V2"] = false,
+        ["Mirage Island"] = false,
+        ["Darkbeard"] = false,
+        ["Full Moon"] = false,
+        ["Prehistoric Island"] = false,
+        ["Volcano Island"] = false
+    }
+}
+
+local function checkSpecialEvents()
+    for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
+        if _G.Settings.AutoServerHopTargets["RIP_Indra"] and v.Name == "RIP_Indra" then return true end
+        if _G.Settings.AutoServerHopTargets["Dough King V2"] and v.Name == "DoughKingV2" then return true end
+        if _G.Settings.AutoServerHopTargets["Mirage Island"] and v.Name == "MirageIsland" then return true end
+        if _G.Settings.AutoServerHopTargets["Darkbeard"] and v.Name == "Darkbeard" then return true end
+        if _G.Settings.AutoServerHopTargets["Full Moon"] and game:GetService("Lighting"):FindFirstChild("FullMoon") then return true end
+        if _G.Settings.AutoServerHopTargets["Prehistoric Island"] and v.Name == "PrehistoricIsland" then return true end
+        if _G.Settings.AutoServerHopTargets["Volcano Island"] and v.Name == "VolcanoIsland" then return true end
+    end
+    return false
+end
+
+local function autoServerHop()
+    while _G.Settings.AutoServerHop do
+        wait(10) -- Check every 10 seconds
+        if not checkSpecialEvents() then
+            print("No event found, hopping server...")
+            game:GetService("TeleportService"):Teleport(game.PlaceId)
+        else
+            print("Event found! Staying in server.")
+        end
+    end
+end
+
+local MainTab = Window:MakeTab({Name = "Main", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local AutoFarmTab = Window:MakeTab({Name = "Auto Farm", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local AutoBountyTab = Window:MakeTab({Name = "Auto Bounty", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local ServerHopTab = Window:MakeTab({Name = "Auto Server Hop", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+
+MainTab:AddDropdown({
+    Name = "Select Team",
+    Default = "Pirate",
+    Options = {"Pirate", "Marine"},
+    Callback = function(Value)
+        _G.Settings.SelectTeam = Value
+    end
+})
+
+AutoFarmTab:AddToggle({
+    Name = "Auto Farm",
+    Default = false,
+    Callback = function(Value)
+        _G.Settings.AutoFarm = Value
+    end
+})
+
+AutoFarmTab:AddToggle({
+    Name = "Auto Raids",
+    Default = false,
+    Callback = function(Value)
+        _G.Settings.AutoRaids = Value
+    end
+})
+
+AutoBountyTab:AddToggle({
+    Name = "Auto Bounty",
+    Default = false,
+    Callback = function(Value)
+        _G.Settings.AutoBounty = Value
+    end
+})
+
+AutoBountyTab:AddToggle({
+    Name = "Kill Aura",
+    Default = false,
+    Callback = function(Value)
+        _G.Settings.KillAura = Value
+    end
+})
+
+ServerHopTab:AddToggle({
+    Name = "Auto Server Hop",
+    Default = false,
+    Callback = function(Value)
+        _G.Settings.AutoServerHop = Value
+        if Value then spawn(autoServerHop) end
+    end
+})
+
+for eventName, _ in pairs(_G.Settings.AutoServerHopTargets) do
+    ServerHopTab:AddToggle({
+        Name = "Hop to " .. eventName,
+        Default = false,
+        Callback = function(Value)
+            _G.Settings.AutoServerHopTargets[eventName] = Value
+        end
+    })
+end
+
+OrionLib:Init()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/yourcustomrepo/custom-bloxfruits-hub/main/script.lua"))()
