@@ -1,0 +1,62 @@
+-- Load the Auto Bounty Farm Script
+_G["Auto Bounty Farming V2"] = {
+    ["Avatar"] = "rbxassetid://8598068647",
+    ["Farm Method"] = "Normal",
+    ["Select Team"] = "Pirate",
+    ["Discord Webhook"] = "",
+    ["Bypass Teleport"] = false,
+    ["Max Level Distance"] = 612,
+    ["Don't attack friends"] = true,
+    ["Don't attack player with cup"] = false,
+    ["Distance Attack Y"] = 2,
+
+    -- Safe Zone Settings
+    ["SafeZone"] = {Enabled = true, ["Health Left (%)"] = 25, ["Wait Until Heal (%)"] = 80},
+
+    -- Targeting System
+    ["Targeting"] = {
+        ["Max Time Target Player"] = 120,
+        ["Next Player Button"] = true,
+        ["Next Server Button"] = true,
+    },
+
+    -- Abilities and Attack System
+    ["Abilities"] = {
+        ["Auto Click"] = true,
+        ["Melee"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Sword"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Gun"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Fruit"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            V = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            F = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+    },
+
+    -- UI and Mobile Support
+    ["UI"] = {
+        ["Draggable"] = true,
+        ["Hide/Show Button"] = true,
+        ["Mini Button"] = {
+            ["Position"] = "Top-Middle",
+            ["Next Player"] = true,
+            ["Next Server"] = true,
+        },
+    },
+
+    -- Extra Performance Boost
+    ["Lag Reduction"] = true,
+    ["Auto Gacha & Store Fruit"] = true,
+}
