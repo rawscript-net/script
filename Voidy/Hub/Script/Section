@@ -1,0 +1,108 @@
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/jensonhirst/Orion/main/source"))()
+
+local Window = OrionLib:MakeWindow({
+    Name = "VOIDY HUB | Blox Fruit",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "BloxFruit"
+})
+
+-- Store running scripts to disable later
+local RunningScripts = {}
+
+-- Function to start or stop a script
+local function ToggleScript(Name, Url, Settings)
+    if RunningScripts[Name] then
+        RunningScripts[Name] = nil  -- Stop tracking the script
+        print(Name .. " disabled")
+    else
+        if Settings then
+            RunningScripts[Name] = loadstring(game:HttpGet(Url))(Settings)
+        else
+            RunningScripts[Name] = loadstring(game:HttpGet(Url))()
+        end
+        print(Name .. " enabled")
+    end
+end
+
+local Tab1 = Window:MakeTab({
+    Name = "BloxFruit Script",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+Tab1:AddToggle({
+    Name = "RedZ",
+    Default = false,
+    Callback = function(Value)
+        ToggleScript("RedZ", "https://raw.githubusercontent.com/realredz/BloxFruits/refs/heads/main/Source.lua", {
+            JoinTeam = "Pirates",
+            Translator = true
+        })
+    end    
+})
+
+Tab1:AddToggle({
+    Name = "Teddy",
+    Default = false,
+    Callback = function(Value)
+        ToggleScript("Teddy", "https://raw.githubusercontent.com/skibiditoiletgojo/Haidepzai/refs/heads/main/Teddy-Premium")
+    end    
+})
+
+Tab1:AddToggle({
+    Name = "Quantum",
+    Default = false,
+    Callback = function(Value)
+        ToggleScript("Quantum", "https://raw.githubusercontent.com/Trustmenotcondom/QTONYX/refs/heads/main/QuantumOnyx.lua")
+    end    
+})
+
+Tab1:AddToggle({
+    Name = "Xeter v2",
+    Default = false,
+    Callback = function(Value)
+        getgenv().Version = "V2"
+        ToggleScript("Xeter", "https://raw.githubusercontent.com/LuaCrack/Loader/main/Xeter.lua")
+    end    
+})
+
+Tab1:AddToggle({
+    Name = "Blue-X",
+    Default = false,
+    Callback = function(Value)
+        ToggleScript("Blue-X", "https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua")
+    end    
+})
+
+Tab1:AddToggle({
+    Name = "Hoho Auto Bounty",
+    Default = false,
+    Callback = function(Value)
+        ToggleScript("Hoho Auto Bounty", "https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI")
+    end    
+})
+
+Tab1:AddToggle({
+    Name = "Unit X",
+    Default = false,
+    Callback = function(Value)
+        ToggleScript("Unit X", "https://shorturl.at/f5xHw")
+    end    
+})
+
+local Tab2 = Window:MakeTab({
+    Name = "FruitSea Script",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+Tab2:AddToggle({
+    Name = "OMG HUB",
+    Default = false,
+    Callback = function(Value)
+        ToggleScript("OMG HUB", "https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua")
+    end    
+})
+
+OrionLib:Init()
